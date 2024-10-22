@@ -1,0 +1,181 @@
+/* src/index.css */
+
+/* Include Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* #341a8b */
+
+.light {
+  --background: rgb(218, 248, 255);
+  --light: #000000;
+  --dark: #FFFFFF;
+  --primaryLight: #2c8ea2;
+  --primaryDark: #1b6482;
+  --secondaryLight: #2d13c2;
+  --secondaryDark: #95faff;
+}
+
+.dark {
+  --background: #000022;
+  --light: #FFFFFF;
+  --dark: #000000;
+  --primaryLight: #00A3FF;
+  --primaryDark: #001242;
+  --secondaryLight: #00FF85;
+  --secondaryDark: #00140B;
+}
+
+@layer base {
+
+  h1, h2, h3, h4, h5, h6, p, hr, label, input, textarea, ul, li {
+    @apply duration-300
+  }
+
+  hr {
+    @apply border-2 border-primaryLight my-4 w-full
+  }
+
+  h1 {
+    @apply text-light to-black text-6xl font-semibold mb-4
+  }
+
+  h2 {
+    @apply text-light text-4xl font-semibold mb-3
+  }
+
+  h3 {
+    @apply text-light text-3xl font-normal mb-2
+  }
+
+  h4 {
+    @apply text-light text-2xl font-normal mb-2
+  }
+
+  p {
+    @apply text-light
+  }
+
+  label {
+    @apply text-light text-2xl font-bold
+  }
+
+  input, textarea {
+    @apply rounded-md py-1 px-2 italic border-2 border-secondaryLight placeholder:text-dark text-xl
+  }
+
+  textarea {
+    @apply resize-none h-[250px]
+  }
+
+  ul {
+    @apply text-light ml-5
+  }
+
+  li {
+    @apply list-disc decoration-light
+  }
+
+}
+
+
+
+@layer utilities {
+
+  .image-dark, .image-light {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .image-dark {
+    background-image: url("/assets/images/bg.jpg");
+  }
+
+  .image-light {
+    background-image: url("/assets/images/bgLight.jpg");
+    @apply brightness-125;
+  }
+
+  .text-shadow-secondaryLight {
+    text-shadow: 2px 2px 0px var(--secondaryLight);
+  }
+
+  .text-shadow-secondaryDark {
+    text-shadow: 2px 2px 0px var(--primaryLight);
+  }
+
+  @property --gradient-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @keyframes rotation {
+    0% { --gradient-angle: 0deg; }
+    100% {--gradient-angle: 360deg; }
+  }
+
+  .btn {
+    @apply py-1 px-2 rounded-md
+  }
+
+  .rotating-gradient {
+    background: var(--secondaryLight); /* Fallback to solid color */
+    background: conic-gradient(
+      from var(--gradient-angle),
+      var(--secondaryLight),
+      var(--primaryLight),
+      var(--primaryLight),
+      var(--secondaryLight)
+    );
+    animation: rotation 2.4s linear infinite;
+  }
+
+  .btn-primary {
+    @apply text-white overflow-hidden relative z-0 after:hover:bg-secondaryDark;
+  }
+
+  .btn-primary::after, .btn-primary::before {
+    @apply inset-1 absolute content-[''] -z-10 bg-gradient-to-r from-primaryDark to-secondaryDark duration-300 hover:bg-primaryLight;
+  }
+
+  .card {
+    @apply relative w-full h-full items-center justify-center flex flex-col rounded-2xl py-4 z-0 hover:scale-110 duration-300
+  }
+
+  .card::after, .card::before {
+    @apply bottom-1 right-1 content-[''] absolute w-full h-full items-center justify-center flex flex-col rounded-2xl py-4 bg-gradient-to-br from-background via-primaryDark to-[120%] to-primaryLight -z-10 border border-primaryLight
+  }
+
+  .btn-secondary {
+    @apply hover:scale-105 duration-300 bg-secondaryLight text-dark hover:bg-secondaryDark hover:text-light hover:border hover:border-light
+  }
+
+  /* For webkit browsers like Chrome, Safari, and Opera */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: black; /* Background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primaryLight rounded-md border border-black
+}
+
+body::-webkit-scrollbar {
+  @apply w-3;
+}
+
+body::-webkit-scrollbar-track {
+  @apply bg-white;
+}
+
+body::-webkit-scrollbar-thumb {
+  @apply bg-primaryLight rounded-lg border-2 border-dark
+}
+}
